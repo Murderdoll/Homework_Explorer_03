@@ -16,8 +16,7 @@ set(EXPLORER_VERSION_STRING "v${EXPLORER_VERSION}")
 add_library(explorer STATIC ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 target_link_libraries(${PROJECT_NAME} -pthread -std=c++14 -lboost_system -lboost_filesystem)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/example1/ DESTINATION example1)
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(FILES main.cpp DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} DESTINATION Arch)
+install(FILES main.cpp DESTINATION Arch)
 
 include(CPackConfig.cmake)
