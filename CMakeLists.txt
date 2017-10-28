@@ -13,9 +13,11 @@ set(EXPLORER_VERSION
 ${EXPLORER_VERSION_MAJOR}.${EXPLORER_VERSION_MINOR}.${EXPLORER_VERSION_PATCH}.${EXPLORER_VERSION_TWEAK})
 set(EXPLORER_VERSION_STRING "v${EXPLORER_VERSION}")
 
+add_library(explorer STATIC ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
-set(SOURCE_FILES main.cpp)
-add_executable(explorer ${PROJECT_SOURCE_DIR}/${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} -pthread -std=c++14 -lboost_system -lboost_filesystem)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/example1/ DESTINATION example1)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES main.cpp DESTINATION bin)
 
 include(CPackConfig.cmake)
