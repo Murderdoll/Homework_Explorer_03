@@ -19,5 +19,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   
 script: 
- - cmake -H. -B_build
- - cmake --build _build
+- cmake -H. -B_builds -DCPACK_GENERATOR=DEB
+- cmake --build _builds --target package
