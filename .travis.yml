@@ -20,4 +20,7 @@ install:
   
 script: 
 - cmake -H. -B_builds -DCPACK_GENERATOR=DEB
+- cmake --build _builds
 - cmake --build _builds --target package
+
+   
