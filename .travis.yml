@@ -13,6 +13,6 @@ addons:
 script:
 - cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF -DCPACK_GENERATO=TGZ
 - cmake --build _build
-- cmake --build _builds --target package
+- cmake --build _build --target package
 
    
