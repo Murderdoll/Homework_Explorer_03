@@ -5,7 +5,9 @@
   "dist": "trusty",
   "addons": {
     "apt": {
-      "packages": "libboost-all-dev"
+      "packages": "libboost-all-dev",
+       "cmake",
+       "cmake-data"
     }
   },
   "before_install": [
@@ -17,9 +19,8 @@
     "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90"
   ],
   "script": [
-    "cmake -H. -B_builds -DCPACK_GENERATOR=DEB",
-    "cmake --build _builds",
-    "cmake --build _builds --target package"
+    "cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF"
+    "cmake --build _build"
   ],
   "group": "stable",
   "os": "linux"
