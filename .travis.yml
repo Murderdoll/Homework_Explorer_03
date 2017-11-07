@@ -1,28 +1,17 @@
-{
-  "sudo": true,
-  "language": "cpp",
-  "compiler": "gcc",
-  "dist": "trusty",
-  "addons": {
-    "apt": {
-      "packages": "libboost-all-dev",
-       "cmake",
-       "cmake-data"
-    }
-  },
-  "before_install": [
-    "sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test",
-    "sudo apt-get update -qq"
-  ],
-  "install": [
-    "sudo apt-get install -qq g++-6",
-    "sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90"
-  ],
-  "script": [
-    "cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF"
-    "cmake --build _build"
-  ],
-  "group": "stable",
-  "os": "linux"
-}
+sudo: true
+language: cpp
+compiler: gcc
+
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
+      
+script:
+- cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF
+- cmake --build _build
+
    
