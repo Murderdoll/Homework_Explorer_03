@@ -12,8 +12,7 @@ double getDirSize(string dirAddress, double size)
  {
     fs::path dirPath = dirAddress;
     fs::path textDir = dirPath.filename();
-    if(fs::exists(dirPath))
-    {
+    if(fs::exists(dirPath)){
       fs::directory_iterator end_itr;
       for(fs::directory_iterator dirIte(dirPath); dirIte != end_itr; ++dirIte)
       {
@@ -53,10 +52,10 @@ void getDirPerm(string path)
     printf("%o\n",s.permissions());
 }
 
-void GetInfo(string path) 
+void GetInfo(string path)
 {
     //Проверка на существование репозитория
-    if(!fs::exists(path)) 
+    if(!fs::exists(path))
     {
       throw runtime_error("Такой директории не существует!!!");
     }
@@ -65,6 +64,27 @@ void GetInfo(string path)
     {
       throw runtime_error("Это не директория!!!");
     }
+
+    std::packaged_task<string(string)> taskPath(getDirPath);
+    std::packaged_task<double(string, double)> taskSize(getDirSize);
+    std::packaged_task<void(string)> taskPerm(getDirPerm);
+
+    std::future<string> dirPath = taskPath.get_future();
+    std::future<double> dirSize = taskSize.get_future();
+    std::future<void> dirPerm = taskPerm.get_future();
+
+    taskPath(path);
+    taskSize(path, 0);
+
+    cout << " " << endl;
+    cout << "Полный путь: " << dirPath.get() << endl;
+    cout << "Размер: " << dirSize.get() << endl;
+    cout << "Права доступа: ";
+    taskPerm(path);
+    cout << "" << endl;
+    /*cout << "Права доступа: ";
+    std::async (getDirPerm,path);
+
     std::future<string> futureDirPath = std::async (getDirPath,path);
     std::future<double> futureDirSize = std::async (getDirSize,path, 0);
     string dirName = futureDirPath.get();
@@ -77,20 +97,37 @@ void GetInfo(string path)
     cout << "Права доступа: ";
     std::async (getDirPerm,path);
     cout << " " << endl;
-}
-
-int main() 
+*/
+ }
+void rec()
 {
-    try 
-    {
-        string path;
-        cout << "Укажите дирректорию:" << endl;
-        cin >> path;
-
-      GetInfo(path);
-
-    } catch(const std::exception& e)
-    {
-        cout << e.what() << endl;
-    }
+  string path;
+  cout << "Укажите дирректорию:" << endl;
+  getline(cin,path);
+  if (path.empty())
+  {
+    cout << "------------ END ------------" << endl;
+  }
+  else
+  {
+    GetInfo(path);
+    rec();
+  }
 }
+
+int main()
+{
+    try
+     {
+       cout << "------------ START ------------" << endl;
+       cout << "Чтобы закончить работу программы нажмите Enter" << endl;
+
+      rec();
+     }
+    catch(const std::exception& e)
+     {
+        cout << e.what() << endl;
+     }
+    return 0;
+  }
+
