@@ -11,7 +11,7 @@ addons:
       - cmake-data
       
 script:
- - cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF -DCPACK_GENERATO=TGZ
+ -cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=OFF -DCPACK_GENERATO=TGZ
  -cmake --build _builds
  -cmake --build _builds --target package
    
